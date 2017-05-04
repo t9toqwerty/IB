@@ -3,37 +3,50 @@ package com.company;
 
 public class PowerFunction {
     public static void main(String args[]) {
-        System.out.println(new PowerFunction().pow(79161127, 99046373, 57263970));
+        System.out.println(new PowerFunction().pow(-1, 1, 20));
     }
 
-    public int pow(int x, int n, int d) {
+    public long pow(long x, int n, int d) {
         if (x == 0) {
             return 0;
+        }
+        if (x == 1) {
+            return 1;
         }
         if (n == 0) {
             return 1;
         }
+
         if (x < 0) {
             while (x < 0) {
                 x += d;
             }
+
             return calculate(x, n, d);
         }
+
         return calculate(x, n, d);
+
     }
 
-    private int calculate(int x, int n, int d) {
-        if (n == 0) {
-            return 1;
-        }
+    private long calculate(long x, int n, int d) {
+
         if (n == 1) {
-            return x % d;
+            return x;
         }
-        long temp = ((x % d) * (x % d)) % d;
+
+        long i = x % d;
+
+        long temp = (i * i) % d;
+
         if (n % 2 == 0) {
-            return pow((int)temp, n / 2, d);
+
+            return pow(temp, n / 2, d);
+
         } else {
-            return pow((int)temp, n / 2, d) * x;
+
+            return (pow(temp, n / 2, d) * x) % d;
         }
+
     }
 }
