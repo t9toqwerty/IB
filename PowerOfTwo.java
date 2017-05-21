@@ -1,18 +1,19 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PowerOfTwo {
 
     public static void main(String args[]) {
 
-        Character[] number = {'4', '2', '0', '0', '0', '5'};
+        String number = "2147483648";
 
-        System.out.println(new PowerOfTwo().divide(number, 2));
+        System.out.println(new PowerOfTwo().power(number));
 
     }
 
-    public int charArrayListToNum(Character[] quotient) {
+    private int charArrayListToNum(Character[] quotient) {
         int num = 0;
 
         for (Character aQuotient : quotient) {
@@ -29,40 +30,41 @@ public class PowerOfTwo {
 
         int op = 0;
 
-        if ((a.charAt(a.length() - 1) == 0) || ((a.charAt(a.length() - 1)) / 2 != 0)) {
+
+        if ((Character.getNumericValue(a.charAt(a.length() - 1)) == 0) ||
+                (Character.getNumericValue(a.charAt(a.length() - 1)) % 2 != 0)) {
             return 0;
         }
 
-        Dividor dividor = divide(numArray, 1024);
+        while (numArray.length > 4) {
 
-        if (!dividor.isCompletelyDivisible) {
+            Dividor dividor = this.divide(numArray, 1024);
 
-            return 0;
+            Character[] quotient = dividor.quotient;
+
+            if (!dividor.isCompletelyDivisible) {
+
+                return 0;
+
+            }
+
+            if (((quotient[quotient.length - 1]) == 0) ||
+                    ((quotient[quotient.length - 1]) / 2 != 0)) {
+                return 0;
+            }
+
+            numArray = dividor.quotient;
 
         }
 
-        Character[] quotient = dividor.quotient;
-
-        if ((((quotient[quotient.length - 1])) == 0) ||
-                (((quotient[quotient.length - 1]) / 2 != 0))) {
-            return 0;
-        }
-
-        while (quotient.length > 4 && this.charArrayListToNum(quotient) > 1024) {
-
-
-            Dividor divided = this.divide(numArray, 1024);
-
-            numArray = divided.quotient;
-
+        if (this.hasAnyPowerOfTwo(charArrayListToNum(numArray))) {
+            return 1;
         }
 
         return op;
     }
 
-    public Dividor divide(Character[] a, int b) {
-
-        ArrayList<ArrayList<Integer>> output = new ArrayList<>(2);
+    private Dividor divide(Character[] a, int b) {
 
         ArrayList<Character> quotient = new ArrayList<>();
 
@@ -93,7 +95,7 @@ public class PowerOfTwo {
         return dividor;
     }
 
-    public Character[] charToCharacterArray(char[] arr) {
+    private Character[] charToCharacterArray(char[] arr) {
 
         Character[] characters = new Character[arr.length];
 
@@ -102,6 +104,20 @@ public class PowerOfTwo {
         }
 
         return characters;
+    }
+
+    private boolean hasAnyPowerOfTwo(int power) {
+
+        ArrayList<Integer> powers = new ArrayList<>(Arrays.asList(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192));
+
+        if (powers.contains(power)) {
+
+            return true;
+
+        }
+
+        return false;
+
     }
 
     class Dividor
