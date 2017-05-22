@@ -7,7 +7,7 @@ public class PowerOfTwo {
 
     public static void main(String args[]) {
 
-        String number = "2147483648";
+        String number = "109951162776";
 
         System.out.println(new PowerOfTwo().power(number));
 
@@ -49,7 +49,8 @@ public class PowerOfTwo {
             }
 
             if (((quotient[quotient.length - 1]) == 0) ||
-                    ((quotient[quotient.length - 1]) / 2 != 0)) {
+                    ((quotient[quotient.length - 1]) % 2 != 0)) {
+
                 return 0;
             }
 
@@ -74,7 +75,14 @@ public class PowerOfTwo {
 
             reminder = reminder * 10 + Character.getNumericValue(anA);
 
-            quotient.add(Character.forDigit((reminder / b), 10));
+            int tempQuotient = reminder / b;
+
+            if (quotient.size() > 0 || tempQuotient != 0) {
+
+
+                quotient.add(Character.forDigit(tempQuotient, 10));
+
+            }
 
             reminder = reminder % b;
 
